@@ -124,20 +124,31 @@ namespace ChannelDemoTool
         {
             if (Directory.Exists(localDir))
             {
-                localDir = "\"" + localDir + "\"";
                 try
                 {
-                    //System.Diagnostics.Process.Start("explorer.exe", "/e, " + localDir);
-                    System.Diagnostics.Process.Start("explorer.exe", localDir);
+                    localDir = "\"" + localDir + "\"";
+
+                    try
+                    {
+                        //throw new Exception();
+                        //System.Diagnostics.Process.Start("explorer.exe", "/e, " + localDir);
+                        System.Diagnostics.Process.Start("explorer.exe", localDir);
+                    }
+                    catch (Exception ex)
+                    {
+                        string cmd = "explorer.exe" + " " + localDir;
+                        Cmd.Run_bat(cmd);
+                    }
+
+                    //var info = new ProcessStartInfo();
+                    //    info.FileName = "explorer.exe";
+                    //    //info.Arguments = "/e, " + localDir;
+                    //    info.Arguments = localDir;
+                    //    Process.Start(info);
+
                 }
                 catch (Exception ex)
-                {
-                    var info = new ProcessStartInfo();
-                    info.FileName = "explorer.exe";
-                    //info.Arguments = "/e, " + localDir;
-                    info.Arguments = localDir;
-                    Process.Start(info);
-                }
+                { }
             }
         }
 
