@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -116,10 +117,27 @@ namespace ChannelDemoTool
         {
             string localDir = curDir() + channelDir.Replace("/", "\\");
             checkDir(localDir);
+            OpenFoder(localDir);
+        }
 
+        private static void OpenFoder(string localDir)
+        {
             if (Directory.Exists(localDir))
             {
-                System.Diagnostics.Process.Start("explorer.exe", "/e, " + localDir);
+                localDir = "\"" + localDir + "\"";
+                try
+                {
+                    //System.Diagnostics.Process.Start("explorer.exe", "/e, " + localDir);
+                    System.Diagnostics.Process.Start("explorer.exe", localDir);
+                }
+                catch (Exception ex)
+                {
+                    var info = new ProcessStartInfo();
+                    info.FileName = "explorer.exe";
+                    //info.Arguments = "/e, " + localDir;
+                    info.Arguments = localDir;
+                    Process.Start(info);
+                }
             }
         }
 
